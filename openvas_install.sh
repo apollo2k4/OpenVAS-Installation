@@ -33,7 +33,7 @@ export GVMD_VERSION=25.0.0
 export PG_GVM_VERSION=22.6.5
 export GSA_VERSION=24.2.0
 export GSAD_VERSION=22.11.0
-export OPENVAS_SMB_VERSION=22.5.3
+export OPENVAS_SMB_VERSION=22.5.7
 export OPENVAS_SCANNER_VERSION=23.15.3
 export OSPD_OPENVAS_VERSION=22.7.1
 export NOTUS_VERSION=22.6.3
@@ -307,6 +307,11 @@ chmod -R g+srw /var/log/gvm
 
 chown gvm:gvm /usr/local/sbin/gvmd
 chmod 6750 /usr/local/sbin/gvmd
+
+# Adjusting NET Permissions
+setcap cap_net_raw=ep /usr/local/sbin/openvas
+setcap cap_net_raw=ep /usr/local/sbin/gvmd
+setcap cap_net_raw=ep
 
 # Feed Validation
 
