@@ -311,7 +311,6 @@ chmod 6750 /usr/local/sbin/gvmd
 # Adjusting NET Permissions
 setcap cap_net_raw=ep /usr/local/sbin/openvas
 setcap cap_net_raw=ep /usr/local/sbin/gvmd
-setcap cap_net_raw=ep
 
 # Feed Validation
 
@@ -341,6 +340,19 @@ EOF
 
 echo "Configured users of the gvm group to run the openvas-scanner application as root user via sudo."
 
+fi
+
+# Add a cron job to crontab
+
+cron_line="0 */12 * * * /usr/bin/sudo -u gvm /usr/local/bin/greenbone-feed-sync"
+cronjob=`crontab -l | grep "$cron_line"`
+
+if [[ -z $cronjob ]]
+    then
+    crontab -l > /tmp/mycron
+    echo -e "\n$cron_line" >> /tmp/mycron
+    crontab /tmp/mycron
+    rm /tmp/mycron
 fi
 
 # Setting up PostgreSQL
