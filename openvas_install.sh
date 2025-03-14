@@ -466,12 +466,13 @@ Wants=gvmd.service
 
 [Service]
 Type=exec
-User=gvm
-Group=gvm
+#User=gvm
+#Group=gvm
 RuntimeDirectory=gsad
 RuntimeDirectoryMode=2775
 PIDFile=/run/gsad/gsad.pid
-ExecStart=/usr/local/sbin/gsad --foreground --listen=0.0.0.0 --port=9392 --http-only
+#ExecStart=/usr/local/sbin/gsad --foreground --listen=0.0.0.0 --port=9392 --http-only
+ExecStart=/usr/local/sbin/gsad --foreground --listen=0.0.0.0 --port=443 --rport=80 --rport=9392 --ssl-private-key=/var/lib/gvm/private/CA/clientkey.pem --ssl-certificate=/var/lib/gvm/CA/clientcert.pem --timeout=30
 Restart=always
 TimeoutStopSec=10
 
