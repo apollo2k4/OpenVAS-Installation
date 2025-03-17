@@ -345,14 +345,14 @@ fi
 # Add a cron job to crontab
 
 cron_line="0 */12 * * * /usr/bin/sudo -u gvm /usr/local/bin/greenbone-feed-sync"
-cronjob=`crontab -l | grep "$cron_line"`
-
-if [[ -z $cronjob ]]
-    then
-    crontab -l > /tmp/mycron
-    echo -e "\n$cron_line" >> /tmp/mycron
-    crontab /tmp/mycron
-    rm /tmp/mycron
+if crontab -l | grep -qF "$cron_line"` > /dev/null ; then
+    echo "Cron job already installed."
+else
+    crontab -l > /tmp/newcronjob
+    echo "$cron_line" >> /tmp/newcronjob
+    crontab /tmp/newcronjob
+    rm /tmp/newcronjob
+    echo "New cron job is added to crontab!!!"
 fi
 
 # Setting up PostgreSQL
