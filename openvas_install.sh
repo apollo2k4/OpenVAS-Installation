@@ -379,6 +379,9 @@ echo "Creating the admin user."
 echo "Setting the admin user as the Feed Import Owner"
 /usr/local/sbin/gvmd --modify-setting 78eceaec-3385-11ea-b237-28d24461215b --value `/usr/local/sbin/gvmd --get-users --verbose | grep admin | awk '{print $2}'`
 
+# Setting up an self sign certificate
+/usr/local/bin/gvm-manage-certs -a -f
+
 # Setting up Services for Systemd
 
 cat << EOF > $BUILD_DIR/ospd-openvas.service
@@ -472,7 +475,7 @@ RuntimeDirectory=gsad
 RuntimeDirectoryMode=2775
 PIDFile=/run/gsad/gsad.pid
 #ExecStart=/usr/local/sbin/gsad --foreground --listen=0.0.0.0 --port=9392 --http-only
-ExecStart=/usr/local/sbin/gsad --foreground --listen=0.0.0.0 --port=443 --rport=80 --rport=9392 --ssl-private-key=/var/lib/gvm/private/CA/clientkey.pem --ssl-certificate=/var/lib/gvm/CA/clientcert.pem --timeout=30
+ExecStart=/usr/local/sbin/gsad --foreground --listen=0.0.0.0 --drop-privileges=gvm --port=443 --rport=80 --rport=9392 --ssl-private-key=/var/lib/gvm/private/CA/clientkey.pem --ssl-certificate=/var/lib/gvm/CA/clientcert.pem --timeout=30
 Restart=always
 TimeoutStopSec=10
 
@@ -505,5 +508,6 @@ systemctl start gsad
 rm -rf ~/source \
 rm -rf ~/build \
 rm -rf ~/install \
+rm -rf ~/1
 
 echo "OpenVAS installation has been completed."
