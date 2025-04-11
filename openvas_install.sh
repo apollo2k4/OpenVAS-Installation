@@ -345,7 +345,7 @@ fi
 # Add a cron job to crontab
 
 cron_line="0 */12 * * * /usr/bin/sudo -u gvm /usr/local/bin/greenbone-feed-sync"
-if crontab -l | grep -qF "$cron_line"` > /dev/null ; then
+if crontab -l | grep -qF "$cron_line" > /dev/null ; then
     echo "Cron job already installed."
 else
     crontab -l > /tmp/newcronjob
@@ -369,6 +369,10 @@ runuser -l  postgres -c 'psql gvmd -c "create role dba with superuser noinherit;
 echo "Create the necessary links and cache to the most recent shared libraries."
 ldconfig -v
 
+# Migration database
+echo "Migration and Analyzing the database. This may take up to several hours."
+sudo -u gvm gvmd --migrate
+
 # Setting up an Admin User
 
 echo "Creating the admin user."
@@ -377,7 +381,7 @@ echo "Creating the admin user."
 # Setting the Feed Import Owner
 
 echo "Setting the admin user as the Feed Import Owner"
-/usr/local/sbin/gvmd --modify-setting 78eceaec-3385-11ea-b237-28d24461215b --value `/usr/local/sbin/gvmd --get-users --verbose | grep admin | awk '{print $2}'`
+/usr/local/sbin/gvmd --modify-setting 78eceaec-3385-11ea-b237-28d24461215b --value "/usr/local/sbin/gvmd --get-users --verbose | grep admin | awk '{print $2}'"
 
 # Setting up an self sign certificate
 /usr/local/bin/gvm-manage-certs -a -f
