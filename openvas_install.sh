@@ -36,7 +36,7 @@ export GSAD_VERSION=$(curl -s "https://api.github.com/repos/greenbone/gsad/relea
 export OPENVAS_SMB_VERSION=$(curl -s "https://api.github.com/repos/greenbone/openvas-smb/releases/latest" | grep -Po '"tag_name": "v\K[0-9.]+')
 export OPENVAS_SCANNER_VERSION=$(curl -s "https://api.github.com/repos/greenbone/openvas-scanner/releases/latest" | grep -Po '"tag_name": "v\K[0-9.]+')
 export OSPD_OPENVAS_VERSION=$(curl -s "https://api.github.com/repos/greenbone/ospd-openvas/releases/latest" | grep -Po '"tag_name": "v\K[0-9.]+')
-export NOTUS_VERSION=$(curl -s "https://api.github.com/repos/greenbone/notus/releases/latest" | grep -Po '"tag_name": "v\K[0-9.]+')
+export NOTUS_VERSION=$(curl -s "https://api.github.com/repos/greenbone/notus-scanner/releases/latest" | grep -Po '"tag_name": "v\K[0-9.]+')
 export GNUPGHOME=/tmp/openvas-gnupg
 export OPENVAS_GNUPG_HOME=/etc/openvas/gnupg
 
