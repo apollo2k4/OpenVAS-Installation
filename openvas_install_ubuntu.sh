@@ -25,7 +25,7 @@ apt install -y --no-install-recommends texlive-latex-extra texlive-fonts-recomme
 apt install -y libglib2.0-dev postgresql-server-dev-16 libical-dev
 
 # gsad
-apt install -y libmicrohttpd-dev libxml2-dev libglib2.0-dev libgnutls28-dev
+apt install -y libmicrohttpd-dev libxml2-dev libglib2.0-dev libgnutls28-dev libgssapi3-heimdal
 
 # openvas-scanner
 apt install -y bison libglib2.0-dev libgnutls28-dev libgcrypt20-dev libpcap-dev libgpgme-dev libksba-dev rsync nmap libjson-glib-dev libcurl4-gnutls-dev libbsd-dev python3-impacket libsnmp-dev
