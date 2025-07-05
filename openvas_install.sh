@@ -286,7 +286,17 @@ usermod -aG redis gvm
 
 systemctl start mosquitto.service
 systemctl enable mosquitto.service
-echo -e "mqtt_server_uri = localhost:1883\ntable_driven_lsc = yes" | tee -a /etc/openvas/openvas.conf
+#echo -e "mqtt_server_uri = localhost:1883\ntable_driven_lsc = yes" | tee -a /etc/openvas/openvas.conf
+
+mqtt_server_uri="mqtt_server_uri = localhost:1883\ntable_driven_lsc = yes"
+    if cat | grep -qF "$mqtt_server_uri" > /dev/null ; then
+    
+    else
+    cat /etc/openvas/openvas.conf > /tmp/openvas.conf
+    echo -e "mqtt_server_uri" | tee -a /etc/openvas/openvas.conf
+    cp /tmp/openvas.conf /etc/openvas/openvas.conf
+    rm /tmp/openvas.conf
+fi
 
 # Adjusting Permissions
 
